@@ -32,6 +32,50 @@ void keyboard(unsigned char key, int x, int y)
         currentTool = TOOL_POLYGON;
         printf("Ferramenta: POLIGONO\n");
         break;
+
+    case 13: // ENTER
+
+        if (currentTool == TOOL_POLYGON &&
+            polygonPointCount >= 3)
+        {
+            Shape polygon;
+
+            polygon.tool = TOOL_POLYGON;
+
+            polygon.color.r = 0;
+            polygon.color.g = 1;
+            polygon.color.b = 0;
+
+            polygon.totalPoints = polygonPointCount;
+
+            for (int i = 0; i < polygonPointCount; i++)
+            {
+                polygon.points[i] = polygonPoints[i];
+            }
+
+            shapes[totalShapes++] = polygon;
+
+            polygonPointCount = 0;
+
+            drawingPolygon = 0;
+
+            glutPostRedisplay();
+
+            printf("Poligono criado\n");
+        }
+
+        break;
+    }
+}
+
+void mouseMotion(int x, int y)
+{
+    if (drawingLine)
+    {
+        lineEnd.x = normalizeX(x);
+        lineEnd.y = normalizeY(y);
+
+        glutPostRedisplay();
     }
 }
 
@@ -40,45 +84,46 @@ void mouse(int button, int state, int x, int y)
     if (button != GLUT_LEFT_BUTTON)
         return;
 
-    if (state != GLUT_DOWN)
-        return;
 
     if (currentTool == TOOL_POINT)
     {
-        Shape point;
+        if (state == GLUT_DOWN)
+        {
+            Shape point;
 
-        point.tool = TOOL_POINT;
+            point.tool = TOOL_POINT;
 
-        point.color.r = 1;
-        point.color.g = 0;
-        point.color.b = 0;
+            point.color.r = 1;
+            point.color.g = 0;
+            point.color.b = 0;
 
-        point.totalPoints = 1;
+            point.totalPoints = 1;
 
-        point.points[0].x = normalizeX(x);
-        point.points[0].y = normalizeY(y);
+            point.points[0].x = normalizeX(x);
+            point.points[0].y = normalizeY(y);
 
-        shapes[totalShapes++] = point;
+            shapes[totalShapes++] = point;
 
-        glutPostRedisplay();
+            glutPostRedisplay();
+        }
     }
 
     if (currentTool == TOOL_LINE)
     {
-        float nx = normalizeX(x);
-        float ny = normalizeY(y);
-
-        if (waitingSecondPoint == 0)
+        if (state == GLUT_DOWN)
         {
-            firstLinePoint.x = nx;
-            firstLinePoint.y = ny;
+            drawingLine = 1;
 
-            waitingSecondPoint = 1;
+            lineStart.x = normalizeX(x);
+            lineStart.y = normalizeY(y);
 
-            printf("Primeiro ponto salvo\n");
+            lineEnd = lineStart;
         }
-        else
+
+        if (state == GLUT_UP)
         {
+            drawingLine = 0;
+
             Shape line;
 
             line.tool = TOOL_LINE;
@@ -89,18 +134,27 @@ void mouse(int button, int state, int x, int y)
 
             line.totalPoints = 2;
 
-            line.points[0] = firstLinePoint;
-
-            line.points[1].x = nx;
-            line.points[1].y = ny;
+            line.points[0] = lineStart;
+            line.points[1] = lineEnd;
 
             shapes[totalShapes++] = line;
 
-            waitingSecondPoint = 0;
+            glutPostRedisplay();
+        }
+    }
+
+    if (currentTool == TOOL_POLYGON)
+    {
+        if (state == GLUT_DOWN)
+        {
+            polygonPoints[polygonPointCount].x = normalizeX(x);
+            polygonPoints[polygonPointCount].y = normalizeY(y);
+
+            polygonPointCount++;
+
+            drawingPolygon = 1;
 
             glutPostRedisplay();
-
-            printf("Linha criada\n");
         }
     }
 }

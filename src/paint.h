@@ -16,4 +16,10 @@ extern Point lineEnd;
 
 extern int drawingLine;
 
+extern Point polygonPoints[MAX_POINTS];
+
+extern int polygonPointCount;
+
+extern int drawingPolygon;
+
 #endif
