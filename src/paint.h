@@ -8,9 +8,6 @@ extern int totalShapes;
 
 extern Tool currentTool;
 
-extern Point firstLinePoint;
-extern int waitingSecondPoint;
-
 extern Point lineStart;
 extern Point lineEnd;
 extern int drawingLine;

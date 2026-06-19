@@ -6,9 +6,6 @@ int totalShapes = 0;
 Tool currentTool = TOOL_POINT;
 
 // Controle da linha
-Point firstLinePoint;
-int waitingSecondPoint = 0;
-
 Point lineStart;
 Point lineEnd;
 

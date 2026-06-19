@@ -73,6 +73,11 @@ void keyboard(unsigned char key, int x, int y)
             printf("Ferramenta: SELEÇÃO\n");
             break;
 
+        case 'x':
+            currentTool = TOOL_SELECTION;
+            printf("Ferramenta: SELEÇÃO\n");
+            break;
+
         case 127: // DELETE
         case 8:
             if (selectedShape >= 0 && selectedShape < totalShapes) {
