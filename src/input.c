@@ -2,7 +2,10 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include "paint.h"
+#include "file.h"
 #include "globals.h"
+#include <string.h>
+#include <stdlib.h>
 
 float normalizeX(int x)
 {
@@ -31,6 +34,14 @@ void keyboard(unsigned char key, int x, int y)
     case 'g':
         currentTool = TOOL_POLYGON;
         printf("Ferramenta: POLIGONO\n");
+        break;
+
+    case 's':
+        saveDrawing();
+        break;
+
+    case 'c':
+        loadDrawing();
         break;
 
     case 13: // ENTER
@@ -63,6 +74,15 @@ void keyboard(unsigned char key, int x, int y)
 
             printf("Poligono criado\n");
         }
+        break;
+
+    case 27: // ESC
+
+        saveDrawing();
+
+        printf("Saindo...\n");
+
+        exit(0);
 
         break;
     }
@@ -83,7 +103,6 @@ void mouse(int button, int state, int x, int y)
 {
     if (button != GLUT_LEFT_BUTTON)
         return;
-
 
     if (currentTool == TOOL_POINT)
     {

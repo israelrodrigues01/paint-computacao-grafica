@@ -1,0 +1,2 @@
+void saveDrawing();
+void loadDrawing();

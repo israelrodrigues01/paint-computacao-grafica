@@ -3,7 +3,8 @@ CC = gcc
 SRC = src/main.c \
       src/render.c \
       src/input.c \
-      src/paint.c
+      src/paint.c \
+      src/file.c
 
 LIBS = -lGL -lGLU -lglut
 

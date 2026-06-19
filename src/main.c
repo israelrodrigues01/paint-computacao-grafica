@@ -5,6 +5,7 @@ void display();
 void keyboard(unsigned char key, int x, int y);
 void mouse(int button, int state, int x, int y);
 void mouseMotion(int x, int y);
+void loadDrawing();
 
 int main(int argc, char **argv)
 {
@@ -15,6 +16,8 @@ int main(int argc, char **argv)
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     glutCreateWindow("Mini Paint");
+
+    loadDrawing();
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
 
