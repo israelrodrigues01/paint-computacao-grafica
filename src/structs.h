@@ -2,7 +2,6 @@
 #define STRUCTS_H
 
 #define MAX_POINTS 100
-#define MAX_SHAPES 1000
 
 typedef enum
 {
@@ -26,8 +25,15 @@ typedef struct
 {
     float x;
     float y;
+    float h;
 
 } Point;
+
+typedef struct
+{
+    float m[3][3];
+} Matriz3x3;
+
 
 typedef struct
 {
@@ -35,6 +41,8 @@ typedef struct
     Color color;
     int totalPoints;
     Point points[MAX_POINTS];
+    Point centroide;
+    Point centroideOriginal;//animação
 
 } Shape;
 

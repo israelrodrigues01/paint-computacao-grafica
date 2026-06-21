@@ -5,7 +5,8 @@ SRC = src/main.c \
 			src/input.c \
 			src/paint.c \
 			src/selection.c \
-			src/file.c
+			src/file.c \
+			src/transformacoes.c
 
 
 ifeq ($(UNAME_S),Darwin)

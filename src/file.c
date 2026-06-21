@@ -33,8 +33,15 @@ void saveDrawing()
             fprintf(file, "LINE\n");
             break;
 
+        case TOOL_SQUARE:
+            fprintf(file, "SQUARE\n");
+            break;
+
         case TOOL_POLYGON:
             fprintf(file, "POLYGON\n");
+            break;
+
+        case TOOL_SELECTION:
             break;
         }
 
@@ -97,6 +104,9 @@ void loadDrawing()
         else if (strcmp(tipo, "LINE") == 0)
             shape.tool = TOOL_LINE;
 
+        else if (strcmp(tipo, "SQUARE") == 0)
+            shape.tool = TOOL_SQUARE;
+
         else if (strcmp(tipo, "POLYGON") == 0)
             shape.tool = TOOL_POLYGON;
 
@@ -121,6 +131,9 @@ void loadDrawing()
                 &shape.points[j].y);
         }
 
+        calcularCentroide(&shape);
+
+        garantirEspacoNoVetor();
         shapes[totalShapes++] = shape;
     }
 

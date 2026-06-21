@@ -4,12 +4,24 @@
 #include <GL/glut.h>
 #endif
 #include "globals.h"
+#include "paint.h"
 
 void display();
 void keyboard(unsigned char key, int x, int y);
 void mouse(int button, int state, int x, int y);
 void mouseMotion(int x, int y);
 void loadDrawing();
+
+//animação:
+void atualizar(int valor)
+{
+    if (modoImaAtivo)
+    {
+        atualizarIma(mouseAtualX, mouseAtualY);
+    }
+    glutPostRedisplay();
+    glutTimerFunc(16, atualizar, 0);
+}//
 
 int main(int argc, char **argv)
 {
@@ -29,6 +41,8 @@ int main(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutMouseFunc(mouse);
     glutMotionFunc(mouseMotion);
+
+    glutTimerFunc(0, atualizar, 0);//animação
 
     glutMainLoop();
 
