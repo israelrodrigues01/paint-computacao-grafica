@@ -1,5 +1,6 @@
 #include "selection.h"
 #include <stdio.h>
+#include <math.h>
 
 int pickPonto(float px, float py, float mx, float my, float t) {
   if (mx <= px + t && mx >= px - t) {
@@ -24,6 +25,39 @@ static int regionCode(float px, float py, float xmin, float xmax, float ymin, fl
   if (py > ymax) code |= ACIMA;
 
   return code;
+}
+
+static float clamp(float value, float min, float max)
+{
+  if (value < min)
+    return min;
+  if (value > max)
+    return max;
+  return value;
+}
+
+static int pointNearSegment(float px, float py, float x1, float y1, float x2, float y2, float tolerance)
+{
+  float dx = x2 - x1;
+  float dy = y2 - y1;
+  float lengthSquared = dx * dx + dy * dy;
+
+  if (lengthSquared == 0.0f)
+  {
+    float distX = px - x1;
+    float distY = py - y1;
+    return (distX * distX + distY * distY) <= tolerance * tolerance;
+  }
+
+  float t = ((px - x1) * dx + (py - y1) * dy) / lengthSquared;
+  t = clamp(t, 0.0f, 1.0f);
+
+  float projX = x1 + t * dx;
+  float projY = y1 + t * dy;
+  float distX = px - projX;
+  float distY = py - projY;
+
+  return (distX * distX + distY * distY) <= tolerance * tolerance;
 }
 
 int pickLinha(float x0, float y0, float x1, float y1, float mx, float my, float t) {
@@ -74,6 +108,15 @@ int pickLinha(float x0, float y0, float x1, float y1, float mx, float my, float 
 
 int pickArea(Point *points, int n, float mx, float my) {
   int intersections = 0;
+
+  for (int i = 0; i < n; i++) {
+    Point p1 = points[i];
+    Point p2 = points[(i + 1) % n];
+
+    if (pointNearSegment(mx, my, p1.x, p1.y, p2.x, p2.y, SELECTION_TOLERANCE)) {
+      return 1;
+    }
+  }
 
   for (int i = 0; i < n; i++) {
     float p1x = points[i].x;

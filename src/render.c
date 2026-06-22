@@ -7,14 +7,10 @@
 
 void drawShape(Shape shape, int selected)
 {
-    if (selected) {
-        glColor3f(1, 0.9, 0);
-    } else {
-        glColor3f(
-            shape.color.r,
-            shape.color.g,
-            shape.color.b);
-    }
+    glColor3f(
+        shape.color.r,
+        shape.color.g,
+        shape.color.b);
 
     switch (shape.tool) {
         case TOOL_POINT:
@@ -78,22 +74,6 @@ void drawShape(Shape shape, int selected)
             }
 
             glEnd();
-
-            if (selected) {
-                glColor3f(1, 0.4, 0);
-                glLineWidth(2.0f);
-                glBegin(GL_LINE_LOOP);
-
-                for (int i = 0; i < shape.totalPoints; i++)
-                {
-                    glVertex2f(
-                        shape.points[i].x,
-                        shape.points[i].y);
-                }
-
-                glEnd();
-                glLineWidth(1);
-            }
 
             break;
 

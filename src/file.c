@@ -1,6 +1,10 @@
 #include <stdio.h>
-#include <GL/glut.h>
 #include <stdio.h>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 #include "paint.h"
 #include "globals.h"
 #include <string.h>
@@ -129,9 +133,12 @@ void loadDrawing()
                 "%f %f",
                 &shape.points[j].x,
                 &shape.points[j].y);
+
+            shape.points[j].h = 1.0f;
         }
 
         calcularCentroide(&shape);
+        shape.centroideOriginal = shape.centroide;
 
         garantirEspacoNoVetor();
         shapes[totalShapes++] = shape;

@@ -219,6 +219,23 @@ void keyboard(unsigned char key, int x, int y)
         }
         break;
 
+    case 'z':
+        totalShapes = 0;
+
+        FILE *file = fopen("drawing.txt", "w");
+
+        if (file)
+        {
+            fprintf(file, "0\n");
+            fclose(file);
+        }
+
+        glutPostRedisplay();
+
+        printf("Tela limpa.\n");
+
+        break;
+
     case 13: // ENTER
 
         if (currentTool == TOOL_POLYGON &&

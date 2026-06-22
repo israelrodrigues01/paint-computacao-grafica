@@ -228,6 +228,7 @@ O projeto utiliza:
 | X | entra no modo seleção |
 | C | carregar desenho salvo (e entra em modo seleção) |
 | W | salvar desenho |
+| Z | apaga o que foi desenhado na tela |
 | Delete / Backspace | apagar shape selecionado (no modo seleção) |
 | ESC | salvar e sair |
 
