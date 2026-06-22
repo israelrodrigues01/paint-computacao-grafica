@@ -27,14 +27,17 @@ paint-computacao-grafica/
 │   ├── main.c
 │   ├── render.c
 │   ├── input.c
-│   └── globals.h
-│
-├── include/
-│
-├── docs/
+│   ├── paint.c
+│   ├── selection.c
+│   ├── file.c
+│   ├── globals.h
+│   ├── paint.h
+│   ├── selection.h
+│   ├── structs.h
+│   └── file.h
 │
 ├── Makefile
-│
+├── drawing.txt
 └── README.md
 ```
 
@@ -210,10 +213,15 @@ O projeto utiliza:
 
 | Tecla | Função |
 |---|---|
-| P | selecionar ponto |
-| L | selecionar linha |
-| Q | selecionar quadrado |
-| ESC | sair |
+| P | ferramenta ponto |
+| L | ferramenta linha |
+| Q | ferramenta quadrado |
+| G | ferramenta polígono (clique para adicionar vértices, ENTER para fechar) |
+| C | carregar desenho salvo (e entra em modo seleção) |
+| X | Entra no modo seleção |
+| S | salvar desenho |
+| Delete / Backspace | apagar shape selecionado (no modo seleção) |
+| ESC | salvar e sair |
 
 ---
 
