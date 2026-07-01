@@ -12,6 +12,7 @@
 #include "transformacoes.h"
 #include <string.h>
 #include <stdlib.h>
+#include "earclipping.h"
 
 float normalizeX(int x)
 {
@@ -234,6 +235,18 @@ void keyboard(unsigned char key, int x, int y)
 
         printf("Tela limpa.\n");
 
+        break;
+
+    case 'f':
+        if (selectedShape >= 0 && selectedShape < totalShapes)
+        {
+            earClipping(&shapes[selectedShape]);
+            glutPostRedisplay();
+        }
+        else
+        {
+            printf("Selecione um poligono primeiro (X, clique, depois F)\n");
+        }
         break;
 
     case 13: // ENTER
